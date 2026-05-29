@@ -1,4 +1,3 @@
--- Transaction Service Database
 CREATE DATABASE IF NOT EXISTS jomoro_transactions;
 USE jomoro_transactions;
 
