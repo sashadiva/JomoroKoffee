@@ -23,7 +23,7 @@ class MinWordsConstraint implements ValidatorConstraintInterface {
       return false;
     }
 
-    const words = value.trim().split(/\s+/).filter(Boolean);
+    const words = value.split(' ').filter(word => word.trim() !== '');
     return words.length >= (args.constraints[0] as number);
   }
 

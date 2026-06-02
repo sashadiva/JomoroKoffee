@@ -18,7 +18,7 @@ let MinWordsConstraint = class MinWordsConstraint {
         if (typeof value !== 'string') {
             return false;
         }
-        const words = value.trim().split(/\s+/).filter(Boolean);
+        const words = value.split(' ').filter(word => word.trim() !== '');
         return words.length >= args.constraints[0];
     }
     defaultMessage(args) {

@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
+
+import { Body, Controller, Param, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ProductService } from './product.service';
 import { AdminGuard } from './admin.guard';
@@ -8,8 +9,8 @@ import { ReduceProductDto } from './dto/reduce-product.dto';
 @ApiTags('admin')
 @ApiBearerAuth()
 @Controller('admin')
-@UseGuards(AdminGuard)
-export class ProductController {
+@UseGuards(AdminGuard) 
+export class ProductManagementController {
   constructor(private readonly productService: ProductService) {}
 
   @Post('products')
@@ -41,28 +42,5 @@ export class ProductController {
   deleteProduct(@Param('id', ParseIntPipe) id: number) {
     return this.productService.deleteProduct(id);
   }
-
-  @Get('products')
-  @ApiOkResponse({ description: 'List all products' })
-  getProducts() {
-    return this.productService.getProducts();
-  }
-
-  @Get('products/:id')
-  @ApiOkResponse({ description: 'Get product details by ID' })
-  getProductById(@Param('id', ParseIntPipe) id: number) {
-    return this.productService.getProductById(id);
-  }
-
-  @Get('categories')
-  @ApiOkResponse({ description: 'List all categories' })
-  getCategories() {
-    return this.productService.getCategories();
-  }
-
-  @Get('categories/:categoryId/products')
-  @ApiOkResponse({ description: 'List products within a category' })
-  getProductsByCategory(@Param('categoryId', ParseIntPipe) categoryId: number) {
-    return this.productService.getProductsByCategory(categoryId);
-  }
+  
 }
