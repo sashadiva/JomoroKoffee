@@ -49,6 +49,26 @@ let AuthService = class AuthService {
         const access_token = this.jwtService.sign(payload);
         return { access_token };
     }
+    async getProfile(userId) {
+        const user = await this.prisma.users.findUnique({
+            where: { id: userId },
+            select: {
+                first_name: true,
+                last_name: true,
+                email: true,
+                role: true,
+            },
+        });
+        if (!user) {
+            throw new common_1.UnauthorizedException('User not found');
+        }
+        return {
+            firstName: user.first_name,
+            lastName: user.last_name,
+            email: user.email,
+            role: user.role,
+        };
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([

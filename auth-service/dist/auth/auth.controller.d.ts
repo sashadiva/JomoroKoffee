@@ -11,7 +11,9 @@ export declare class AuthController {
         access_token: string;
     }>;
     getProfile(req: any): Promise<{
-        userId: any;
-        role: any;
+        firstName: string;
+        lastName: string;
+        email: string;
+        role: string;
     }>;
 }
