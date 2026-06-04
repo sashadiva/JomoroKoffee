@@ -64,6 +64,5 @@ DATABASE_URL=mysql://root@localhost:3306/jomoro_koffee
 
 1. Run `npm run db:import` from the repo root
 2. In each service, run `npm install`
-3. In each service, run `npx prisma db pull` (optional, if schema needs syncing)
-4. In each service, run `npx prisma generate`
-5. Start the services with `npm run start:dev`
+2. In each service, run `npx prisma generate`
+4. Start the services with `npm run start:dev`

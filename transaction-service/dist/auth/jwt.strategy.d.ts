@@ -8,7 +8,7 @@ export declare class JwtStrategy extends JwtStrategy_base {
         id: number;
         role?: string;
     }): {
-        userId: number;
+        id: number;
         role: string | undefined;
     };
 }

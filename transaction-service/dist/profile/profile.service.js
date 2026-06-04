@@ -53,11 +53,13 @@ let ProfileService = class ProfileService {
         }
         catch (error) {
             if ((0, axios_1.isAxiosError)(error) && error.response) {
-                throw error.response.status === 401
-                    ? new common_1.BadGatewayException('Unauthorized when fetching profile from Auth Service')
-                    : new common_1.BadGatewayException('Failed to fetch profile from Auth Service');
+                const status = error.response.status;
+                if (status === 401) {
+                    throw new common_1.UnauthorizedException('Invalid or expired authentication session');
+                }
+                throw new common_1.BadGatewayException(`Auth Service responded with status ${status}`);
             }
-            throw new common_1.BadGatewayException('Unable to retrieve profile from Auth Service');
+            throw new common_1.BadGatewayException('Auth Service is unreachable');
         }
     }
 };

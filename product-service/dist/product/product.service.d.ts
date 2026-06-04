@@ -4,7 +4,7 @@ export declare class ProductService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     getProducts(): import(".prisma/client").Prisma.PrismaPromise<({
-        category: {
+        categories: {
             name: string;
             id: number;
             created_at: Date;
@@ -22,7 +22,7 @@ export declare class ProductService {
         updated_at: Date;
     } & {})[]>;
     getProductById(id: number): Promise<{
-        category: {
+        categories: {
             name: string;
             id: number;
             created_at: Date;
@@ -46,7 +46,7 @@ export declare class ProductService {
         updated_at: Date;
     } & {})[]>;
     getProductsByCategory(categoryId: number): import(".prisma/client").Prisma.PrismaPromise<({
-        category: {
+        categories: {
             name: string;
             id: number;
             created_at: Date;

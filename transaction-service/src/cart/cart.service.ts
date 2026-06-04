@@ -41,7 +41,7 @@ export class CartService {
     return {
       cartId: cart.id,
       items,
-      totalItems: items.length,
+      totalItems: items.reduce((sum, item) => sum + item.quantity, 0),
       totalAmount: items.reduce((sum, item) => sum + item.totalPrice, 0),
     };
   }
@@ -54,7 +54,7 @@ export class CartService {
     }
 
     const cart = await this.getOrCreateCart(userId);
-    const existingItem = cart.cart_items.find((item) => item.product_id === productId);
+    const existingItem = (cart.cart_items ?? []).find((item) => item.product_id === productId);
 
     if (existingItem) {
       throw new BadRequestException('Product already exists in the cart');

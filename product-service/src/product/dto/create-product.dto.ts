@@ -74,7 +74,7 @@ export class CreateProductDto {
   @ApiPropertyOptional({ example: 'https://example.com/image.png', nullable: true })
   @IsOptional()
   @IsString()
-  image_url?: string | null;
+  image_url?: string;
 
   @ApiProperty({ example: 1 })
   @Type(() => Number)

@@ -6,7 +6,6 @@ import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 
 @ApiTags('auth')
-@ApiBearerAuth()
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -25,10 +24,11 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
+  @ApiBearerAuth('bearer')
   @UseGuards(JwtAuthGuard)
-  @Get('profile')
+  @Get('profiles')
   @ApiOkResponse({ description: 'Profile data retrieved successfully' })
   async getProfile(@Request() req: any) {
-    return this.authService.getProfile(req.user.userId);
+    return this.authService.getProfile(req.user.id);
   }
 }

@@ -20,7 +20,7 @@ let ProductService = class ProductService {
     getProducts() {
         return this.prisma.products.findMany({
             include: {
-                category: true,
+                categories: true,
             },
         });
     }
@@ -28,7 +28,7 @@ let ProductService = class ProductService {
         const product = await this.prisma.products.findUnique({
             where: { id },
             include: {
-                category: true,
+                categories: true,
             },
         });
         if (!product) {
@@ -43,7 +43,7 @@ let ProductService = class ProductService {
         return this.prisma.products.findMany({
             where: { category_id: categoryId },
             include: {
-                category: true,
+                categories: true,
             },
         });
     }

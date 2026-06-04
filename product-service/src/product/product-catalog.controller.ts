@@ -2,8 +2,9 @@ import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ProductService } from './product.service';
 
+
 @ApiTags('products')
-@Controller() // Leaves the root empty so routes match the spec exactly
+@Controller() 
 export class ProductCatalogController {
   constructor(private readonly productService: ProductService) {}
 

@@ -16,19 +16,20 @@ exports.OrderController = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 const order_service_1 = require("./order.service");
+const swagger_1 = require("@nestjs/swagger");
 let OrderController = class OrderController {
     orderService;
     constructor(orderService) {
         this.orderService = orderService;
     }
     getOrders(req) {
-        return this.orderService.getOrders(req.user.userId);
+        return this.orderService.getOrders(req.user.id);
     }
     checkout(req) {
-        return this.orderService.checkout(req.user.userId);
+        return this.orderService.checkout(req.user.id);
     }
     getOrderDetail(req, orderId) {
-        return this.orderService.getOrderDetail(req.user.userId, orderId);
+        return this.orderService.getOrderDetail(req.user.id, orderId);
     }
 };
 exports.OrderController = OrderController;
@@ -55,6 +56,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], OrderController.prototype, "getOrderDetail", null);
 exports.OrderController = OrderController = __decorate([
+    (0, swagger_1.ApiTags)('order'),
+    (0, swagger_1.ApiBearerAuth)('bearer'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)('orders'),
     __metadata("design:paramtypes", [order_service_1.OrderService])

@@ -18,25 +18,26 @@ const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 const cart_service_1 = require("./cart.service");
 const add_cart_item_dto_1 = require("./dto/add-cart-item.dto");
 const update_cart_item_dto_1 = require("./dto/update-cart-item.dto");
+const swagger_1 = require("@nestjs/swagger");
 let CartController = class CartController {
     cartService;
     constructor(cartService) {
         this.cartService = cartService;
     }
     getCart(req) {
-        return this.cartService.getCart(req.user.userId);
+        return this.cartService.getCart(req.user.id);
     }
     addItem(req, body) {
-        return this.cartService.addItem(req.user.userId, body.productId, body.quantity);
+        return this.cartService.addItem(req.user.id, body.productId, body.quantity);
     }
     updateCartItem(req, productId, body) {
-        return this.cartService.updateItem(req.user.userId, productId, body.quantity);
+        return this.cartService.updateItem(req.user.id, productId, body.quantity);
     }
     deleteCartItem(req, productId) {
-        return this.cartService.deleteItem(req.user.userId, productId);
+        return this.cartService.deleteItem(req.user.id, productId);
     }
     clearCart(req) {
-        return this.cartService.clearCart(req.user.userId);
+        return this.cartService.clearCart(req.user.id);
     }
 };
 exports.CartController = CartController;
@@ -80,6 +81,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "clearCart", null);
 exports.CartController = CartController = __decorate([
+    (0, swagger_1.ApiTags)('cart'),
+    (0, swagger_1.ApiBearerAuth)('bearer'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)('cart'),
     __metadata("design:paramtypes", [cart_service_1.CartService])

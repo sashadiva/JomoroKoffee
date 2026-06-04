@@ -47,6 +47,14 @@ async function bootstrap() {
         .setTitle('Auth Service')
         .setDescription('Jomoro Koffee Authentication API')
         .setVersion('1.0')
+        .addBearerAuth({
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'JWT',
+        description: 'Enter your JWT token exclusively generated from Auth Service login',
+        in: 'header',
+    }, 'bearer')
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('api', app, document);

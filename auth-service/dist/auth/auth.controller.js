@@ -31,7 +31,7 @@ let AuthController = class AuthController {
         return this.authService.login(loginDto);
     }
     async getProfile(req) {
-        return this.authService.getProfile(req.user.userId);
+        return this.authService.getProfile(req.user.id);
     }
 };
 exports.AuthController = AuthController;
@@ -54,8 +54,9 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "login", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)('bearer'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Get)('profile'),
+    (0, common_1.Get)('profiles'),
     (0, swagger_1.ApiOkResponse)({ description: 'Profile data retrieved successfully' }),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
@@ -64,7 +65,6 @@ __decorate([
 ], AuthController.prototype, "getProfile", null);
 exports.AuthController = AuthController = __decorate([
     (0, swagger_1.ApiTags)('auth'),
-    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], AuthController);

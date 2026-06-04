@@ -11,41 +11,6 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 
-@ValidatorConstraint({ name: 'allowedEmailDomain', async: false })
-class AllowedEmailDomainConstraint implements ValidatorConstraintInterface {
-  validate(value: any, args: ValidationArguments) {
-    if (typeof value !== 'string') {
-      return false;
-    }
-
-    const parts = value.split('@');
-    if (parts.length !== 2) {
-      return false;
-    }
-
-    const domain = parts[1].toLowerCase();
-    const allowedDomains = (args.constraints[0] as string[]) || ['com', 'net', 'org', 'id'];
-
-    return allowedDomains.some((allowed) => domain.endsWith(`.${allowed}`));
-  }
-
-  defaultMessage(args: ValidationArguments) {
-    const allowedDomains = (args.constraints[0] as string[]) || ['com', 'net', 'org', 'id'];
-    return `Email must end with a valid domain (.${allowedDomains.join(', .')})`;
-  }
-}
-
-function AllowedEmailDomain(domains: string[], validationOptions?: ValidationOptions) {
-  return function (object: Object, propertyName: string) {
-    registerDecorator({
-      target: object.constructor,
-      propertyName,
-      options: validationOptions,
-      constraints: [domains],
-      validator: AllowedEmailDomainConstraint,
-    });
-  };
-}
 
 @ValidatorConstraint({ name: 'noSpaces', async: false })
 class NoSpacesConstraint implements ValidatorConstraintInterface {
@@ -121,9 +86,6 @@ export class RegisterDto {
   @ApiProperty({ example: 'john@example.com' })
   @IsNotEmpty()
   @IsEmail({}, { message: 'Email must be valid' })
-  @AllowedEmailDomain(['com', 'net', 'org', 'id'], {
-    message: 'Email must end with a valid domain (.com, .net, .org, .id)',
-  })
   email!: string;
 
   @ApiProperty({ example: 'abc12345' })

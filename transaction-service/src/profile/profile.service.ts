@@ -1,4 +1,9 @@
-import { BadGatewayException, Injectable } from '@nestjs/common';
+import { 
+  BadGatewayException, 
+  Injectable, 
+  UnauthorizedException, 
+  InternalServerErrorException 
+} from '@nestjs/common';
 import axios, { isAxiosError } from 'axios';
 
 @Injectable()
@@ -13,11 +18,16 @@ export class ProfileService {
       return response.data;
     } catch (error) {
       if (isAxiosError(error) && error.response) {
-        throw error.response.status === 401
-          ? new BadGatewayException('Unauthorized when fetching profile from Auth Service')
-          : new BadGatewayException('Failed to fetch profile from Auth Service');
+        const status = error.response.status;
+
+        if (status === 401) {
+          throw new UnauthorizedException('Invalid or expired authentication session');
+        }
+        
+        throw new BadGatewayException(`Auth Service responded with status ${status}`);
       }
-      throw new BadGatewayException('Unable to retrieve profile from Auth Service');
+      
+      throw new BadGatewayException('Auth Service is unreachable');
     }
   }
 }

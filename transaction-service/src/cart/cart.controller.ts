@@ -3,7 +3,10 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CartService } from './cart.service';
 import { AddCartItemDto } from './dto/add-cart-item.dto';
 import { UpdateCartItemDto } from './dto/update-cart-item.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('cart')
+@ApiBearerAuth('bearer')
 @UseGuards(JwtAuthGuard)
 @Controller('cart')
 export class CartController {
@@ -11,12 +14,12 @@ export class CartController {
 
   @Get()
   getCart(@Req() req: any) {
-    return this.cartService.getCart(req.user.userId);
+    return this.cartService.getCart(req.user.id);
   }
 
   @Post()
   addItem(@Req() req: any, @Body() body: AddCartItemDto) {
-    return this.cartService.addItem(req.user.userId, body.productId, body.quantity);
+    return this.cartService.addItem(req.user.id, body.productId, body.quantity);
   }
 
   @Post(':productId/update')
@@ -25,16 +28,16 @@ export class CartController {
     @Param('productId', ParseIntPipe) productId: number,
     @Body() body: UpdateCartItemDto,
   ) {
-    return this.cartService.updateItem(req.user.userId, productId, body.quantity);
+    return this.cartService.updateItem(req.user.id, productId, body.quantity);
   }
 
   @Post(':productId/delete')
   deleteCartItem(@Req() req: any, @Param('productId', ParseIntPipe) productId: number) {
-    return this.cartService.deleteItem(req.user.userId, productId);
+    return this.cartService.deleteItem(req.user.id, productId);
   }
 
   @Post('clear')
   clearCart(@Req() req: any) {
-    return this.cartService.clearCart(req.user.userId);
+    return this.cartService.clearCart(req.user.id);
   }
 }

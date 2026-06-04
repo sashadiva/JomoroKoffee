@@ -12,38 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RegisterDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
-let AllowedEmailDomainConstraint = class AllowedEmailDomainConstraint {
-    validate(value, args) {
-        if (typeof value !== 'string') {
-            return false;
-        }
-        const parts = value.split('@');
-        if (parts.length !== 2) {
-            return false;
-        }
-        const domain = parts[1].toLowerCase();
-        const allowedDomains = args.constraints[0] || ['com', 'net', 'org', 'id'];
-        return allowedDomains.some((allowed) => domain.endsWith(`.${allowed}`));
-    }
-    defaultMessage(args) {
-        const allowedDomains = args.constraints[0] || ['com', 'net', 'org', 'id'];
-        return `Email must end with a valid domain (.${allowedDomains.join(', .')})`;
-    }
-};
-AllowedEmailDomainConstraint = __decorate([
-    (0, class_validator_1.ValidatorConstraint)({ name: 'allowedEmailDomain', async: false })
-], AllowedEmailDomainConstraint);
-function AllowedEmailDomain(domains, validationOptions) {
-    return function (object, propertyName) {
-        (0, class_validator_1.registerDecorator)({
-            target: object.constructor,
-            propertyName,
-            options: validationOptions,
-            constraints: [domains],
-            validator: AllowedEmailDomainConstraint,
-        });
-    };
-}
 let NoSpacesConstraint = class NoSpacesConstraint {
     validate(value) {
         return typeof value === 'string' && !value.includes(' ');
@@ -122,9 +90,6 @@ __decorate([
     (0, swagger_1.ApiProperty)({ example: 'john@example.com' }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsEmail)({}, { message: 'Email must be valid' }),
-    AllowedEmailDomain(['com', 'net', 'org', 'id'], {
-        message: 'Email must end with a valid domain (.com, .net, .org, .id)',
-    }),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "email", void 0);
 __decorate([
