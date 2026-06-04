@@ -29,6 +29,6 @@ export class AuthController {
   @Get('profile')
   @ApiOkResponse({ description: 'Profile data retrieved successfully' })
   async getProfile(@Request() req: any) {
-    return { userId: req.user.userId, role: req.user.role };
+    return this.authService.getProfile(req.user.userId);
   }
 }

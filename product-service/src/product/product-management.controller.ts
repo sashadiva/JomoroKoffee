@@ -2,6 +2,7 @@
 import { Body, Controller, Param, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ProductService } from './product.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { AdminGuard } from './admin.guard';
 import { CreateProductDto } from './dto/create-product.dto';
 import { ReduceProductDto } from './dto/reduce-product.dto';
@@ -9,7 +10,7 @@ import { ReduceProductDto } from './dto/reduce-product.dto';
 @ApiTags('admin')
 @ApiBearerAuth()
 @Controller('admin')
-@UseGuards(AdminGuard) 
+@UseGuards(JwtAuthGuard, AdminGuard)
 export class ProductManagementController {
   constructor(private readonly productService: ProductService) {}
 

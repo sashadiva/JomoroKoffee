@@ -23,17 +23,27 @@ This directory contains SQL files for three microservices:
 ### Step 1: Import SQL Files to MySQL
 
 ```bash
-# Option 1: Using MySQL CLI
+# Option 1: Using the provided Node import script
+npm run db:import
+
+# Option 2: Using MySQL CLI
 mysql -u root -p < databases/auth.sql
 mysql -u root -p < databases/products.sql
 mysql -u root -p < databases/transactions.sql
 
-# Option 2: Using Docker
+# Option 3: Using Docker
 docker run --name mysql-jomoro -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 -d mysql:8.0
 docker exec -i mysql-jomoro mysql -uroot -proot < databases/auth.sql
 docker exec -i mysql-jomoro mysql -uroot -proot < databases/products.sql
 docker exec -i mysql-jomoro mysql -uroot -proot < databases/transactions.sql
 ```
+
+The import script uses these environment variables if set:
+
+- `DB_HOST` (default: `localhost`)
+- `DB_PORT` (default: `3306`)
+- `DB_USER` (default: `root`)
+- `DB_PASSWORD` (default: `root`)
 
 ### Step 2: Verify Databases Created
 

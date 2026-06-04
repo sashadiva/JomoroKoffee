@@ -9,7 +9,7 @@ datasource db {
 
 model carts {
   id         Int      @id @default(autoincrement())
-  user_id    Int
+  user_id    Int      @unique
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   cart_items cart_items[]
@@ -24,6 +24,8 @@ model cart_items {
   updated_at DateTime @updatedAt
 
   cart carts @relation(fields: [cart_id], references: [id])
+
+  @@unique([cart_id, product_id])
 }
 
 model orders {

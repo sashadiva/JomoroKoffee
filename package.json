@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "@nestjs/passport": "^11.0.5",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "mysql2": "^3.22.4"
+  },
+  "scripts": {
+    "db:import": "node import-databases.js"
+  },
+  "devDependencies": {
+    "@types/passport-jwt": "^4.0.1"
+  }
+}
