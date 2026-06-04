@@ -7,7 +7,7 @@ const DB_PORT = Number(process.env.DB_PORT || 3306);
 const DB_USER = process.env.DB_USER || 'root';
 const DB_PASSWORD = process.env.DB_PASSWORD || 'root';
 
-const files = ['databases/auth.sql', 'databases/products.sql', 'databases/transactions.sql'];
+const files = ['databases/jomoro_koffee.sql'];
 
 async function loadFile(filePath) {
   const absolutePath = path.join(__dirname, filePath);

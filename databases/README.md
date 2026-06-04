@@ -2,17 +2,17 @@
 
 ## Database Structure
 
-This directory contains SQL files for three microservices:
+All services share a single `jomoro_koffee` database containing:
 
-### 1. **auth.sql** - Auth Service
+### Auth Service Tables
 - `users` table: User authentication data (first_name, last_name, email, password, role)
 - Supports ADMIN and CUSTOMER roles
 
-### 2. **products.sql** - Product Service
+### Product Service Tables
 - `categories` table: Product categories
 - `products` table: Product catalog with pricing and inventory
 
-### 3. **transactions.sql** - Transaction Service
+### Transaction Service Tables
 - `carts` table: Shopping carts for users
 - `cart_items` table: Items in shopping carts
 - `orders` table: User orders
@@ -20,22 +20,18 @@ This directory contains SQL files for three microservices:
 
 ## Setup Instructions
 
-### Step 1: Import SQL Files to MySQL
+### Step 1: Import SQL File to MySQL
 
 ```bash
-# Option 1: Using the provided Node import script
+# Option 1: Using the provided Node import script (recommended)
 npm run db:import
 
 # Option 2: Using MySQL CLI
-mysql -u root -p < databases/auth.sql
-mysql -u root -p < databases/products.sql
-mysql -u root -p < databases/transactions.sql
+mysql -u root -p < databases/jomoro_koffee.sql
 
 # Option 3: Using Docker
 docker run --name mysql-jomoro -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 -d mysql:8.0
-docker exec -i mysql-jomoro mysql -uroot -proot < databases/auth.sql
-docker exec -i mysql-jomoro mysql -uroot -proot < databases/products.sql
-docker exec -i mysql-jomoro mysql -uroot -proot < databases/transactions.sql
+docker exec -i mysql-jomoro mysql -uroot -proot < databases/jomoro_koffee.sql
 ```
 
 The import script uses these environment variables if set:
@@ -45,17 +41,29 @@ The import script uses these environment variables if set:
 - `DB_USER` (default: `root`)
 - `DB_PASSWORD` (default: `root`)
 
-### Step 2: Verify Databases Created
+### Step 2: Verify Database Created
 
 ```sql
 SHOW DATABASES;
--- Should show: jomoro_auth, jomoro_products, jomoro_transactions
+-- Should show: jomoro_koffee
+
+USE jomoro_koffee;
+SHOW TABLES;
+-- Should show: users, categories, products, carts, cart_items, orders, order_details
+```
+
+## Configuration
+
+Each service's `.env` file points to the same database:
+
+```
+DATABASE_URL=mysql://root@localhost:3306/jomoro_koffee
 ```
 
 ## Next Steps
 
-1. Create NestJS microservices for each service
-2. In each service, initialize Prisma and introspect the database
-3. Configure Prisma schemas based on introspection results
-4. Generate Prisma Client models
-5. Implement API endpoints with Swagger documentation
+1. Run `npm run db:import` from the repo root
+2. In each service, run `npm install`
+3. In each service, run `npx prisma db pull` (optional, if schema needs syncing)
+4. In each service, run `npx prisma generate`
+5. Start the services with `npm run start:dev`
