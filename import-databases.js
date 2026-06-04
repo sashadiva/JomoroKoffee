@@ -5,9 +5,9 @@ const mysql = require('mysql2/promise');
 const DB_HOST = process.env.DB_HOST || 'localhost';
 const DB_PORT = Number(process.env.DB_PORT || 3306);
 const DB_USER = process.env.DB_USER || 'root';
-const DB_PASSWORD = process.env.DB_PASSWORD || 'root';
+const DB_PASSWORD = "";
 
-const files = ['databases/jomoro_koffee.sql'];
+const files = ['database/jomoro_koffee.sql'];
 
 async function loadFile(filePath) {
   const absolutePath = path.join(__dirname, filePath);
