@@ -105,10 +105,10 @@ let OrderService = class OrderService {
             },
             include: { order_details: true },
         });
+        await Promise.all(orderItems.map(async (item) => this.reduceProductStock(item.productId, item.quantity)));
         await this.prisma.cart_items.deleteMany({
             where: { cart_id: cart.id },
         });
-        await Promise.all(orderItems.map(async (item) => this.reduceProductStock(item.productId, item.quantity)));
         return { message: 'Order processed successfully', orderId: order.id };
     }
     async getOrderDetail(userId, orderId) {

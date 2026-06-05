@@ -35,6 +35,7 @@ let OrderController = class OrderController {
 exports.OrderController = OrderController;
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_1.ApiOkResponse)({ description: 'Order history list retrieved successfully.' }),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -42,6 +43,8 @@ __decorate([
 ], OrderController.prototype, "getOrders", null);
 __decorate([
     (0, common_1.Post)(),
+    (0, swagger_1.ApiCreatedResponse)({ description: 'Order checked out and processed successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 400, description: 'Bad Request - The shopping cart is empty or requested quantities exceed available stock.' }),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -49,6 +52,8 @@ __decorate([
 ], OrderController.prototype, "checkout", null);
 __decorate([
     (0, common_1.Post)(':id'),
+    (0, swagger_1.ApiOkResponse)({ description: 'Specific order invoice item details compiled successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Not Found - No matching order matching this ID was found for the current user session.' }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
@@ -60,6 +65,7 @@ exports.OrderController = OrderController = __decorate([
     (0, swagger_1.ApiBearerAuth)('bearer'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)('orders'),
+    (0, swagger_1.ApiResponse)({ status: 401, description: 'Unauthorized - Missing or invalid JWT session token' }),
     __metadata("design:paramtypes", [order_service_1.OrderService])
 ], OrderController);
 //# sourceMappingURL=order.controller.js.map

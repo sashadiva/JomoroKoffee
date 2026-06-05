@@ -1,5 +1,4 @@
 -- Jomoro Koffee Database
--- Combined schema for all microservices
 CREATE DATABASE IF NOT EXISTS jomoro_koffee;
 USE jomoro_koffee;
 
@@ -75,3 +74,26 @@ CREATE TABLE IF NOT EXISTS order_details (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
 );
+
+
+
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE order_details;
+TRUNCATE TABLE orders;
+TRUNCATE TABLE cart_items;
+TRUNCATE TABLE carts;
+TRUNCATE TABLE products;
+TRUNCATE TABLE categories;
+TRUNCATE TABLE users;
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+INSERT INTO users (id, first_name, last_name, email, password, role) VALUES
+(1, 'Ad', 'Min', 'admin@jomorokoffee.com', 'admin123', 'ADMIN');
+
+INSERT INTO categories (id, name) VALUES
+(1, 'Coffee'),
+(2, 'Non-Coffee'),
+(3, 'Pastries'),
+(4, 'Merchandise');
+

@@ -78,13 +78,13 @@ export class OrderService {
       include: { order_details: true },
     });
 
-    await this.prisma.cart_items.deleteMany({
-      where: { cart_id: cart.id },
-    });
-
     await Promise.all(
       orderItems.map(async (item) => this.reduceProductStock(item.productId, item.quantity)),
     );
+
+    await this.prisma.cart_items.deleteMany({
+      where: { cart_id: cart.id },
+    });
 
     return { message: 'Order processed successfully', orderId: order.id };
   }

@@ -43,6 +43,8 @@ let CartController = class CartController {
 exports.CartController = CartController;
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_1.ApiOkResponse)({ description: 'Cart data retrieved successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 401, description: 'Unauthorized - Missing or invalid JWT session token.' }),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -50,6 +52,9 @@ __decorate([
 ], CartController.prototype, "getCart", null);
 __decorate([
     (0, common_1.Post)(),
+    (0, swagger_1.ApiOkResponse)({ description: 'Item added to cart successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 400, description: 'Bad Request - Requested quantity exceeds stock or item already exists.' }),
+    (0, swagger_1.ApiResponse)({ status: 401, description: 'Unauthorized token context.' }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -58,6 +63,9 @@ __decorate([
 ], CartController.prototype, "addItem", null);
 __decorate([
     (0, common_1.Post)(':productId/update'),
+    (0, swagger_1.ApiOkResponse)({ description: 'Cart item quantity updated successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 400, description: 'Bad Request - Quantity exceeds available stock.' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Not Found - Targeted product is not present in user\'s cart.' }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('productId', common_1.ParseIntPipe)),
     __param(2, (0, common_1.Body)()),
@@ -67,6 +75,8 @@ __decorate([
 ], CartController.prototype, "updateCartItem", null);
 __decorate([
     (0, common_1.Post)(':productId/delete'),
+    (0, swagger_1.ApiOkResponse)({ description: 'Item removed from cart successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Not Found - Targeted product is not present in user\'s cart.' }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('productId', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
@@ -75,6 +85,7 @@ __decorate([
 ], CartController.prototype, "deleteCartItem", null);
 __decorate([
     (0, common_1.Post)('clear'),
+    (0, swagger_1.ApiOkResponse)({ description: 'Cart cleared successfully.' }),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

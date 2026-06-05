@@ -27,11 +27,11 @@ All services share a single `jomoro_koffee` database containing:
 npm run db:import
 
 # Option 2: Using MySQL CLI
-mysql -u root -p < databases/jomoro_koffee.sql
+mysql -u root -p < database/jomoro_koffee.sql
 
 # Option 3: Using Docker
 docker run --name mysql-jomoro -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 -d mysql:8.0
-docker exec -i mysql-jomoro mysql -uroot -proot < databases/jomoro_koffee.sql
+docker exec -i mysql-jomoro mysql -uroot -proot < database/jomoro_koffee.sql
 ```
 
 The import script uses these environment variables if set:
