@@ -89,7 +89,7 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiProperty)({ example: 'john@example.com' }),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsEmail)({}, { message: 'Email must be valid' }),
+    (0, class_validator_1.IsEmail)({}, { message: 'Email must end with .com, .net, .org, or .id' }),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "email", void 0);
 __decorate([

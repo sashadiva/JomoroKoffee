@@ -75,7 +75,7 @@ __decorate([
 ], ProductManagementController.prototype, "deleteProduct", null);
 exports.ProductManagementController = ProductManagementController = __decorate([
     (0, swagger_1.ApiTags)('admin'),
-    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBearerAuth)('bearer'),
     (0, common_1.Controller)('admin'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, admin_guard_1.AdminGuard),
     __metadata("design:paramtypes", [product_service_1.ProductService])

@@ -46,7 +46,7 @@ let ProfileService = class ProfileService {
     authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://localhost:3001';
     async getProfile(authHeader) {
         try {
-            const response = await axios_1.default.get(`${this.authServiceUrl}/auth/profile`, {
+            const response = await axios_1.default.get(`${this.authServiceUrl}/auth/profiles`, {
                 headers: { Authorization: authHeader },
             });
             return response.data;

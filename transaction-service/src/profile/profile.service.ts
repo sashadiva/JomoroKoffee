@@ -6,13 +6,20 @@ import {
 } from '@nestjs/common';
 import axios, { isAxiosError } from 'axios';
 
+interface UserProfile {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+} 
+
 @Injectable()
 export class ProfileService {
   private readonly authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://localhost:3001';
 
   async getProfile(authHeader: string) {
     try {
-      const response = await axios.get(`${this.authServiceUrl}/auth/profile`, {
+      const response = await axios.get(`${this.authServiceUrl}/auth/profiles`, {
         headers: { Authorization: authHeader },
       });
       return response.data;

@@ -10,8 +10,6 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-
-
 @ValidatorConstraint({ name: 'noSpaces', async: false })
 class NoSpacesConstraint implements ValidatorConstraintInterface {
   validate(value: any) {
@@ -24,7 +22,7 @@ class NoSpacesConstraint implements ValidatorConstraintInterface {
 }
 
 function NoSpaces(validationOptions?: ValidationOptions) {
-  return function (object: Object, propertyName: string) {
+  return function (object: object, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName,
@@ -61,7 +59,7 @@ class MinDigitsConstraint implements ValidatorConstraintInterface {
 }
 
 function MinDigits(min: number, validationOptions?: ValidationOptions) {
-  return function (object: Object, propertyName: string) {
+  return function (object: object, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName,
@@ -85,7 +83,7 @@ export class RegisterDto {
 
   @ApiProperty({ example: 'john@example.com' })
   @IsNotEmpty()
-  @IsEmail({}, { message: 'Email must be valid' })
+  @IsEmail({}, { message: 'Email must end with .com, .net, .org, or .id' })
   email!: string;
 
   @ApiProperty({ example: 'abc12345' })

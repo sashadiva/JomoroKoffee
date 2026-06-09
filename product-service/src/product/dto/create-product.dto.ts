@@ -36,7 +36,7 @@ class MinWordsConstraint implements ValidatorConstraintInterface {
 function MinWords(minWords: number, validationOptions?: ValidationOptions) {
   return function (object: Object, propertyName: string) {
     registerDecorator({
-      target: object.constructor,
+      target: (object as any).constructor,
       propertyName,
       options: validationOptions,
       constraints: [minWords],

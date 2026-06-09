@@ -35,12 +35,15 @@ export class AuthService {
       where: { email: loginDto.email },
     });
 
-    if (!user || user.password !== loginDto.password) {
-      throw new UnauthorizedException('Invalid email or password');
+    if (!user) {
+      throw new UnauthorizedException('Email not found');
+    }
+    if (user.password !== loginDto.password) {
+      throw new UnauthorizedException('Invalid password');
     }
 
     const payload = { id: user.id, role: user.role };
-    const access_token = await this.jwtService.sign(payload);
+    const access_token = this.jwtService.sign(payload);
 
     return { access_token };
   }

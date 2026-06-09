@@ -42,11 +42,14 @@ let AuthService = class AuthService {
         const user = await this.prisma.users.findUnique({
             where: { email: loginDto.email },
         });
-        if (!user || user.password !== loginDto.password) {
-            throw new common_1.UnauthorizedException('Invalid email or password');
+        if (!user) {
+            throw new common_1.UnauthorizedException('Email not found');
+        }
+        if (user.password !== loginDto.password) {
+            throw new common_1.UnauthorizedException('Invalid password');
         }
         const payload = { id: user.id, role: user.role };
-        const access_token = await this.jwtService.sign(payload);
+        const access_token = this.jwtService.sign(payload);
         return { access_token };
     }
     async getProfile(userId) {

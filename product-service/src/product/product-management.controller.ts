@@ -8,7 +8,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { ReduceProductDto } from './dto/reduce-product.dto';
 
 @ApiTags('admin')
-@ApiBearerAuth()
+@ApiBearerAuth('bearer')
 @Controller('admin')
 @UseGuards(JwtAuthGuard, AdminGuard)
 export class ProductManagementController {
